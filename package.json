@@ -1,0 +1,21 @@
+{
+  "name": "atlogger",
+  "version": "1.0.0",
+  "description": "",
+  "main": "log.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ATGroupFreelance/ATUtils"
+  },
+  "author": {
+    "name": "ATGroupFreelance"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "async-lock": "^1.4.0",
+    "moment": "^2.29.4"
+  }
+}
