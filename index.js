@@ -1,3 +1,4 @@
-const ATUtils = require('./ATUtils/ATUtils');
+const ATUtility = require('./ATUtility/ATUtility');
 
-ATUtils.log('test')
+
+module.exports = ATUtility

@@ -20,4 +20,5 @@ const logger = new ATLogger(createWorkingDirectoryPath)
 
 module.exports = {    
     log: logger.log,
+    createWorkingDirectoryPath
 }
