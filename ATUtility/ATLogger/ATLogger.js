@@ -7,17 +7,17 @@ const asynclock = require('async-lock');
 const lock = new asynclock();
 
 class ATLogger {
-    constructor(createWorkingDirectoryPathFunc, logKey = 'default_log_key') {
+    constructor(getWorkingDirectoryPath, logKey = 'default_log_key') {
         const newFileDate = moment().format('YYYY-MM-DD')
 
         this.logFileDate = newFileDate
-        this.createWorkingDirectoryPathFunc = createWorkingDirectoryPathFunc
+        this.getWorkingDirectoryPathFunc = getWorkingDirectoryPath
         this.logFile = this.createLogFile(newFileDate)
         this.logKey = logKey
     }
 
     createLogFile = (filename) => {
-        const dir = this.createWorkingDirectoryPathFunc('Logs')
+        const dir = this.getWorkingDirectoryPathFunc('Logs')
         console.log("Log directory: ", dir)
         if (!fs.existsSync(dir)) {
             console.log("Log directory not found, making a new directory...")
