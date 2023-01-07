@@ -14,15 +14,29 @@ class ATLogger {
         this.getWorkingDirectoryPathFunc = getWorkingDirectoryPath
         this.logFile = this.createLogFile(newFileDate)
         this.logKey = logKey
+        this.consoleLogEnabled = true
+    }
+
+    internalConsoleLog = (...props) => {
+        if (this.consoleLogEnabled)
+            console.log(...props)
+    }
+
+    enableInternalConsoleLog = () => {
+        this.consoleLogEnabled = true
+    }
+
+    disableInternalConsoleLog = () => {
+        this.consoleLogEnabled = false
     }
 
     createLogFile = (filename) => {
         const dir = this.getWorkingDirectoryPathFunc('Logs')
-        console.log("Log directory: ", dir)
+        internalConsoleLog("Log directory: ", dir)
         if (!fs.existsSync(dir)) {
-            console.log("Log directory not found, making a new directory...")
+            internalConsoleLog("Log directory not found, making a new directory...")
             fs.mkdirSync(dir);
-            console.log("Done!")
+            internalConsoleLog("Done!")
         };
 
         return fs.createWriteStream(path.resolve(dir, filename + '.log'), { encoding: 'utf8', flags: 'a' });
@@ -30,9 +44,9 @@ class ATLogger {
 
     log = (newLog, inspect) => {
         if (inspect)
-            console.log(util.inspect(d, { showHidden: true, depth: null, colors: true }))
+            internalConsoleLog(util.inspect(d, { showHidden: true, depth: null, colors: true }))
         else
-            console.log(newLog);
+            internalConsoleLog(newLog);
 
         //Log the thread
         lock.acquire(this.logKey, (resolve) => {
@@ -56,8 +70,8 @@ class ATLogger {
             resolve();
         }, (err, ret) => {
             if (typeof err !== 'undefined' && err) {
-                console.log("Error on logging!");
-                console.log(err.message)
+                internalConsoleLog("Error on logging!");
+                internalConsoleLog(err.message)
             }
         }, {});
     }
