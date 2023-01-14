@@ -14,7 +14,7 @@ npm install atutility
 
 <h2><strong>How to use ?</strong></h2>
 <br>
-<h3><b>Import</h3>
+<h3><b>Import</b></h3>
 <br>
 
 ```
@@ -24,7 +24,7 @@ const ATUtility = require('atutility')
 ```
 
 <br>
-<h3><b>Log to file</h3>
+<h3><b>Log to file</b></h3>
 <br>
 Log a text to a file with timestamp.
 
@@ -44,7 +44,7 @@ ATUtility.disableConsoleLog()
 ```
 
 <br>
-<h3><b>Useful String and JSON Manipulations</h3>
+<h3><b>Useful String and JSON Manipulations</b></h3>
 <br>
 Capitalize the first letter of an string.
 
@@ -71,7 +71,7 @@ ATUtility.getKeylessResultSet(arrayOfObject)
 ```
 
 <br>
-<h3><b>Useful Directory and File Functions</h3>
+<h3><b>Useful Directory and File Functions</b></h3>
 <br>
 get the absolute path of a relative path.
 
