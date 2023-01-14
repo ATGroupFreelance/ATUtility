@@ -12,6 +12,7 @@
 /Playground
 # production
 /build
+/Logs
 
 # misc
 .DS_Store

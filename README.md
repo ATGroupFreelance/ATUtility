@@ -1,7 +1,7 @@
 A simple node js and javascript utility for a few useful functionalities including a logger that can log any string to a file with a timestamp.
 
 <h1>ATUtility</h1>
-This is utility package for node js, the goal is to gather useful functions and utilities for developing backend and node js application in one place.
+This is a utility package for node js, the goal is to gather useful functions and utilities for developing backend and node js application in one place.
 <br>
 <h2>How to install using npm</h2>
 

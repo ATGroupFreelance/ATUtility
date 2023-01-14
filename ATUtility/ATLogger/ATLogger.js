@@ -32,11 +32,11 @@ class ATLogger {
 
     createLogFile = (filename) => {
         const dir = this.getWorkingDirectoryPathFunc('Logs')
-        internalConsoleLog("Log directory: ", dir)
+        this.internalConsoleLog("Log directory: ", dir)
         if (!fs.existsSync(dir)) {
-            internalConsoleLog("Log directory not found, making a new directory...")
+            this.internalConsoleLog("Log directory not found, making a new directory...")
             fs.mkdirSync(dir);
-            internalConsoleLog("Done!")
+            this.internalConsoleLog("Done!")
         };
 
         return fs.createWriteStream(path.resolve(dir, filename + '.log'), { encoding: 'utf8', flags: 'a' });
@@ -44,9 +44,9 @@ class ATLogger {
 
     log = (newLog, inspect) => {
         if (inspect)
-            internalConsoleLog(util.inspect(d, { showHidden: true, depth: null, colors: true }))
+            this.internalConsoleLog(util.inspect(d, { showHidden: true, depth: null, colors: true }))
         else
-            internalConsoleLog(newLog);
+            this.internalConsoleLog(newLog);
 
         //Log the thread
         lock.acquire(this.logKey, (resolve) => {
@@ -70,8 +70,8 @@ class ATLogger {
             resolve();
         }, (err, ret) => {
             if (typeof err !== 'undefined' && err) {
-                internalConsoleLog("Error on logging!");
-                internalConsoleLog(err.message)
+                this.internalConsoleLog("Error on logging!");
+                this.internalConsoleLog(err.message)
             }
         }, {});
     }

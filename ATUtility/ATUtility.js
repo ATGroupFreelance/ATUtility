@@ -1,6 +1,7 @@
 
 const path = require('path');
 const ATLogger = require('./ATLogger/ATLogger');
+const fs = require("fs");
 
 const getWorkingDirectory = () => {
     const exeFullName = process.argv[0];
@@ -70,6 +71,45 @@ const isStringifiedJSONValid = (str) => {
     return true;
 }
 
+const createDirectory = (directoryPath, recursive = false) => {
+    return new Promise((resolve, reject) => {
+        fs.mkdir(directoryPath, { recursive: recursive }, (error) => {
+            if (error)
+                reject(error)
+            else
+                resolve(true)
+        })
+    })
+
+}
+
+const createDirectorySync = (directoryPath, recursive = false) => {
+    if (!fs.existsSync(directoryPath) || recursive === true)
+        fs.mkdirSync(directoryPath, { recursive: recursive })
+}
+
+const getFileListSync = (directoryPath, returnFullPath = true, includeDirectories = false) => {
+    return fs.readdirSync(directoryPath, { withFileTypes: true })
+        .filter(item => includeDirectories || !item.isDirectory())
+        .map(item => returnFullPath ? path.resolve(directoryPath, item.name) : item.name)
+}
+
+const readFile = (path, encoding = 'utf8') => {
+    return new Promise((resolve, reject) => {
+        fs.readFile(path, { encoding: encoding }, (error, data) => {
+            if (error) {
+                reject(error)
+            }
+
+            resolve(data)
+        })
+    })
+}
+
+const readFileSync = (path, encoding = 'utf8') => {
+    return fs.readFileSync(path, encoding);
+}
+
 const logger = new ATLogger(getWorkingDirectoryPath)
 
 module.exports = {
@@ -79,5 +119,10 @@ module.exports = {
     getWorkingDirectoryPath,
     getKeylessResultSet,
     capitalizeFirstLetter,
-    isStringifiedJSONValid
+    isStringifiedJSONValid,
+    createDirectory,
+    createDirectorySync,
+    getFileListSync,
+    readFile,
+    readFileSync
 }
