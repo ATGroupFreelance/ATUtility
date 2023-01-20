@@ -114,6 +114,7 @@ const logger = new ATLogger(getWorkingDirectoryPath)
 
 module.exports = {
     log: (inputString, inspect = false) => logger.log(inputString, inspect),
+    logAsFileSync: (data, label) => logger.logAsFileSync(data, label),
     enableConsoleLog: () => logger.enableInternalConsoleLog(),
     disableConsoleLog: () => logger.disableInternalConsoleLog(),
     getWorkingDirectoryPath,

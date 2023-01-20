@@ -30,7 +30,7 @@ class ATLogger {
         this.consoleLogEnabled = false
     }
 
-    createLogFile = (filename) => {
+    getLogDirectory = () => {
         const dir = this.getWorkingDirectoryPathFunc('Logs')
         this.internalConsoleLog("Log directory: ", dir)
         if (!fs.existsSync(dir)) {
@@ -38,6 +38,12 @@ class ATLogger {
             fs.mkdirSync(dir);
             this.internalConsoleLog("Done!")
         };
+
+        return dir
+    }
+
+    createLogFile = (filename) => {
+        const dir = this.getLogDirectory()
 
         return fs.createWriteStream(path.resolve(dir, filename + '.log'), { encoding: 'utf8', flags: 'a' });
     }
@@ -74,6 +80,23 @@ class ATLogger {
                 this.internalConsoleLog(err.message)
             }
         }, {});
+    }
+
+    logAsFileSync = (data, label = '') => {
+        let baseFilename = `${this.logFileDate}_${moment().format('HH-mm-ss.SSS')}_File`
+        if (label && label !== '') {
+            baseFilename = baseFilename + '_' + label
+        }
+
+        const baseFilePath = path.resolve(this.getLogDirectory(), baseFilename)
+        const filePath = baseFilePath + '.log'
+
+        let counter = 0
+        while (fs.existsSync(filePath)) {
+            counter = counter + 1
+        }
+
+        fs.writeFileSync(counter === 0 ? filePath : baseFilePath + `_${counter}` + '.log', data)
     }
 }
 
