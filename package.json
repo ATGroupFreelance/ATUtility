@@ -1,9 +1,9 @@
 {
   "name": "atutility",
-  "version": "1.0.9",
+  "version": "1.0.15",
   "description": "",
   "main": "index.js",
-  "scripts": {    
+  "scripts": {
     "test": "node Playground/tester.js"
   },
   "repository": {
@@ -16,6 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "async-lock": "^1.4.0",
+    "js-base64": "^3.7.4",
     "moment": "^2.29.4"
   }
 }

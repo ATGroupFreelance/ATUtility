@@ -9,6 +9,10 @@ const getWorkingDirectory = () => {
 
     if (exePath === "C:\\Program Files\\nodejs")
         exePath = undefined;
+    else if (exePath === "/usr/bin")
+        exePath = undefined
+    else if (exePath === "/usr/local/bin")
+        exePath = undefined
 
     return exePath || process.cwd();
 }
@@ -110,11 +114,20 @@ const readFileSync = (path, encoding = 'utf8') => {
     return fs.readFileSync(path, encoding);
 }
 
+const getReadableErrorMessage = (error) => {
+    const shortMessage = error?.originalError?.info?.message;
+    if (shortMessage !== undefined)
+        return shortMessage
+
+    return error;
+}
+
 const logger = new ATLogger(getWorkingDirectoryPath)
 
 module.exports = {
     log: (inputString, inspect = false) => logger.log(inputString, inspect),
     logAsFileSync: (data, label) => logger.logAsFileSync(data, label),
+    logJSONasFileSync: (data, label) => logger.logJSONasFileSync(data, label),
     enableConsoleLog: () => logger.enableInternalConsoleLog(),
     disableConsoleLog: () => logger.disableInternalConsoleLog(),
     getWorkingDirectoryPath,
@@ -125,5 +138,13 @@ module.exports = {
     createDirectorySync,
     getFileListSync,
     readFile,
-    readFileSync
+    readFileSync,
+    getReadableErrorMessage,
+    log2: () => {
+        const a = () => {
+            return 10
+        }
+
+        return this
+    }
 }

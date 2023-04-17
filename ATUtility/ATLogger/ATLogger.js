@@ -98,6 +98,22 @@ class ATLogger {
 
         fs.writeFileSync(counter === 0 ? filePath : baseFilePath + `_${counter}` + '.log', data)
     }
+
+    isString = (x) => {
+        return Object.prototype.toString.call(x) === "[object String]"
+    }
+
+    logJSONasFileSync = (data, label) => {
+        const baseFilePath = path.resolve(this.getLogDirectory(), label)
+        const filePath = baseFilePath + '.json'
+
+        if (this.isString(data)) {
+            fs.writeFileSync(filePath, data)
+        }
+        else {
+            fs.writeFileSync(filePath, JSON.stringify(data, null, 4))
+        }
+    }
 }
 
 module.exports = ATLogger   
