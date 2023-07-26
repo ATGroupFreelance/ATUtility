@@ -50,7 +50,7 @@ class ATLogger {
 
     log = (newLog, inspect) => {
         if (inspect)
-            this.internalConsoleLog(util.inspect(d, { showHidden: true, depth: null, colors: true }))
+            this.internalConsoleLog(util.inspect(newLog, { showHidden: true, depth: null, colors: true }))
         else
             this.internalConsoleLog(newLog);
 
