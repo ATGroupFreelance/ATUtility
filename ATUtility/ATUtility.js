@@ -122,6 +122,62 @@ const getReadableErrorMessage = (error) => {
     return error;
 }
 
+const mergeObjectInObjectAtIndex = (index, object, newObject) => {
+    const result = {}
+    let isMerged = false
+
+    let indexCounter = 0
+
+    for (let keyA in object) {
+        if (indexCounter === index) {
+            for (let keyB in newObject) {
+                result[keyB] = newObject[keyB]
+            }
+
+            isMerged = true
+        }
+
+        result[keyA] = object[keyA]
+
+        indexCounter = indexCounter + 1
+    }
+
+    if (!isMerged) {
+        return {
+            ...result,
+            newObject
+        }
+    }
+    else
+        return result
+}
+
+const mergeObjectInObjectAtKey = (key, object, newObject) => {
+    const result = {}
+    let isMerged = false
+
+    for (let keyA in object) {
+        result[keyA] = object[keyA]
+        
+        if (keyA === key) {
+            for (let keyB in newObject) {
+                result[keyB] = newObject[keyB]
+            }
+
+            isMerged = true
+        }        
+    }
+
+    if (!isMerged) {
+        return {
+            ...result,
+            newObject
+        }
+    }
+    else
+        return result
+}
+
 const logger = new ATLogger(getWorkingDirectoryPath)
 
 module.exports = {
@@ -146,5 +202,7 @@ module.exports = {
         }
 
         return this
-    }
+    },
+    mergeObjectInObjectAtIndex,
+    mergeObjectInObjectAtKey
 }
