@@ -13,6 +13,8 @@ const getWorkingDirectory = () => {
         exePath = undefined
     else if (exePath === "/usr/local/bin")
         exePath = undefined
+    else if (exePath.includes("/root/.nvm"))
+        exePath = undefined
 
     return exePath || process.cwd();
 }
@@ -158,14 +160,14 @@ const mergeObjectInObjectAtKey = (key, object, newObject) => {
 
     for (let keyA in object) {
         result[keyA] = object[keyA]
-        
+
         if (keyA === key) {
             for (let keyB in newObject) {
                 result[keyB] = newObject[keyB]
             }
 
             isMerged = true
-        }        
+        }
     }
 
     if (!isMerged) {
@@ -196,13 +198,7 @@ module.exports = {
     readFile,
     readFileSync,
     getReadableErrorMessage,
-    log2: () => {
-        const a = () => {
-            return 10
-        }
-
-        return this
-    },
+    log2: (...args) => logger.log2(...args),
     mergeObjectInObjectAtIndex,
     mergeObjectInObjectAtKey
 }

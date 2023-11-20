@@ -114,6 +114,93 @@ class ATLogger {
             fs.writeFileSync(filePath, JSON.stringify(data, null, 4))
         }
     }
+
+    getCurrentLineNumber = () => {
+        let lineNumber = null
+        let fileName = null
+
+        const error = new Error();
+
+        try {
+            if (error.stack) {
+                const stackArr = error.stack.split('\n');
+                if (stackArr.length >= 4) {
+                    const line = stackArr[3];
+                    lineNumber = line.replace(/.*:(\d+):\d+.*/, '$1');
+
+                    // Retrieve the file name from the stack trace
+                    const fileNameRegex = /.*\((.*):\d+:\d+\)/;
+                    const fileNameMatch = stackArr[3].match(fileNameRegex);
+                    const fulleFileName = fileNameMatch ? fileNameMatch[1] : null;
+
+                    // Get the relative path by subtracting the current working directory
+                    // from the absolute file path
+                    fileName = fulleFileName ? path.relative(this.getWorkingDirectoryPathFunc(''), fulleFileName) : null;
+                }
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+        return {
+            lineNumber,
+            fileName
+        };
+    }
+
+    log2 = (...args) => {
+        let isChainless = true
+        let mShowLineNumber = true
+        let mShowConsoleLog = true
+        let mShowTimeStamp = true
+        let mSaveAsFileFileName = null
+
+        const logger = () => {
+
+            const systemArgs = [
+            ]
+
+            if (mShowLineNumber) {
+                const { lineNumber, fileName } = this.getCurrentLineNumber()
+
+                systemArgs.push(`${fileName}_${lineNumber}: `)
+            }
+
+            if (mShowConsoleLog)
+                console.log(...systemArgs, ...args)
+
+            if (mSaveAsFileFileName) {
+                if (mShowTimeStamp) {
+                    systemArgs.push(moment().format('YYYY-MM-DD HH:mm:ss.SSS'))
+                }
+
+                this.logJSONasFileSync([...systemArgs, ...args], mSaveAsFileFileName)
+            }
+        }
+
+        logger.cfg = ({ showConsoleLog = true, showLineNumber = true, showTimeStamp = true }) => {
+            mShowConsoleLog = showConsoleLog ?? mShowConsoleLog
+            mShowLineNumber = showLineNumber ?? mShowLineNumber
+            mShowTimeStamp = showTimeStamp ?? mShowTimeStamp
+
+            return logger
+        }
+
+        logger.hideConsoleLog = () => {
+            mShowConsoleLog = false
+
+            return logger
+        }
+
+        logger.saveAsFile = (fileName) => {
+            mSaveAsFileFileName = fileName
+
+            return logger
+        }
+
+        return logger
+    }
 }
 
-module.exports = ATLogger   
+module.exports = ATLogger
