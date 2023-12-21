@@ -15,6 +15,8 @@ const getWorkingDirectory = () => {
         exePath = undefined
     else if (exePath.includes("/root/.nvm"))
         exePath = undefined
+    else if (exePath.includes("/.nvm/versions"))
+        exePath = undefined
 
     return exePath || process.cwd();
 }
