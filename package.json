@@ -1,8 +1,9 @@
 {
   "name": "atutility",
-  "version": "1.0.22",
+  "version": "1.0.24",
   "description": "",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "node Playground/tester.js"
   },
