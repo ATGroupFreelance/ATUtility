@@ -17,6 +17,8 @@ const getWorkingDirectory = () => {
         exePath = undefined
     else if (exePath.includes("/.nvm/versions"))
         exePath = undefined
+    else if (exePath.includes(path.join('node_modules', 'ts-node', 'dist')))
+        exePath = undefined
 
     return exePath || process.cwd();
 }
