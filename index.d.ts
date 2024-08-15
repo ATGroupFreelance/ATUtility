@@ -2,6 +2,7 @@
 
 declare module 'atutility' {
     interface AtUtility {
+        getWorkingDirectory(): string;
         getWorkingDirectoryPath(newRelativePath: string): string;
         getKeylessResultSet(recordsets: Array<any>): Array<string[]>;
         capitalizeFirstLetter(string: string): string;

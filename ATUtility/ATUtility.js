@@ -190,6 +190,7 @@ module.exports = {
     logJSONasFileSync: (data, label) => logger.logJSONasFileSync(data, label),
     enableConsoleLog: () => logger.enableInternalConsoleLog(),
     disableConsoleLog: () => logger.disableInternalConsoleLog(),
+    getWorkingDirectory,
     getWorkingDirectoryPath,
     getKeylessResultSet,
     capitalizeFirstLetter,
