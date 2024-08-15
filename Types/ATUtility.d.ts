@@ -12,7 +12,7 @@ declare module './atutility' {
     function mergeObjectInObjectAtIndex(index: number, object: object, newObject: object): object;
     function mergeObjectInObjectAtKey(key: string, object: object, newObject: object): object;
 
-    const log: (inputString: any, inspect?: boolean) => Promise<void>;
+    const log: (inputString: any, inspect?: boolean) => void;
     const logAsFileSync: (data: string, label?: string) => void;
     const logJSONasFileSync: (data: string | object, label: string) => void;
     const enableConsoleLog: () => void;
