@@ -19,6 +19,8 @@ const getWorkingDirectory = () => {
         exePath = undefined
     else if (exePath.includes(path.join('node_modules', 'ts-node', 'dist')))
         exePath = undefined
+    else if (exePath.includes(path.join('node_modules', '.bin')))
+        exePath = undefined
 
     return exePath || process.cwd();
 }
@@ -121,11 +123,7 @@ const readFileSync = (path, encoding = 'utf8') => {
 }
 
 const getReadableErrorMessage = (error) => {
-    const shortMessage = error?.originalError?.info?.message;
-    if (shortMessage !== undefined)
-        return shortMessage
-
-    return error;
+    return error?.originalError?.info?.message || error?.reason?.message || error?.message || error;
 }
 
 const mergeObjectInObjectAtIndex = (index, object, newObject) => {
