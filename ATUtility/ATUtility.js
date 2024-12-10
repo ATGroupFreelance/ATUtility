@@ -21,6 +21,8 @@ const getWorkingDirectory = () => {
         exePath = undefined
     else if (exePath.includes(path.join('node_modules', '.bin')))
         exePath = undefined
+    else if (exePath.includes(path.join('.local', 'share', 'fnm', 'node-versions')))
+        exePath = undefined
 
     return exePath || process.cwd();
 }
